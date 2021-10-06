@@ -5,12 +5,7 @@ const apiKey = '69fa176e0b9e4c0aebe0cea100aa629d';
 const baseUrl = 'https://api.openweathermap.org/data/2.5/weather';
 
 class Network {
-  Network(this.lat, this.lon);
-
-  final double lat;
-  final double lon;
-
-  Future getData() async {
+  Future getData(double lat, double lon) async {
     Response response = await get(Uri.parse(
         '$baseUrl?lat=$lat&lon=$lon&appid=$apiKey&units=metric'));
     if(response.statusCode == 200){

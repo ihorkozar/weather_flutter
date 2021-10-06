@@ -26,18 +26,20 @@ class _LocationScreenState extends State<LocationScreen> {
   }
 
   void updateData(dynamic data) {
-    if (data == null) {
-      temp = 0;
-      weatherIcon = 'Error';
-      weatherMsg = 'Unable to get data';
-      city = '';
-      return;
-    }
-    temp = (data['main']['temp']).toInt();
-    var condition = data['weather'][0]['id'];
-    city = data['name'];
-    weatherIcon = _weatherModel.getWeatherIcon(condition);
-    weatherMsg = '${_weatherModel.getMessage(temp)} in $city';
+    setState(() {
+      if (data == null) {
+        temp = 0;
+        weatherIcon = 'Error';
+        weatherMsg = 'Unable to get data';
+        city = '';
+        return;
+      }
+      temp = (data['main']['temp']).toInt();
+      var condition = data['weather'][0]['id'];
+      city = data['name'];
+      weatherIcon = _weatherModel.getWeatherIcon(condition);
+      weatherMsg = '${_weatherModel.getMessage(temp)} in $city';
+    });
   }
 
   @override
@@ -78,8 +80,9 @@ class _LocationScreenState extends State<LocationScreen> {
                           MaterialPageRoute(builder: (context) {
                         return CityScreen();
                       }));
-                      if(name != null){
-
+                      if(name != null) {
+                        var weatherData = await _weatherModel.getCityWeather(name);
+                        updateData(weatherData);
                       }
                     },
                     child: Icon(

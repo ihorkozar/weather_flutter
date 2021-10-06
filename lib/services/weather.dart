@@ -37,14 +37,12 @@ class WeatherModel {
   Future<dynamic> getlocationWeather() async {
     Location location = Location();
     await location.getCurrentLocation();
-    Network network = Network(location.lat, location.lon);
-    return await network.getData();
+    Network network = Network();
+    return await network.getData(location.lat, location.lon);
   }
 
   Future<dynamic> getCityWeather(String city) async {
-    Location location = Location();
-    await location.getCurrentLocation();
-    Network network = Network(location.lat, location.lon);
+    Network network = Network();
     return await network.getCityData(city);
   }
 }
